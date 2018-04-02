@@ -14,7 +14,7 @@ Install:<br />
 Ensure [BetterDiscord](https://github.com/rauenzi/BetterDiscordApp/releases/latest) is installed.<br />
 Put the js and json file in the plugins folder of Betterdiscord<br />
 Restart the Discord client either by right clicking the tray icon and clicking "Quit Discord" or by pressing Ctrl+R inside the client.<br />
-Go to User Settings in Discord / Plugins > Select `Background v0.1.0 by Letsplaybar`
+Go to User Settings in Discord / Plugins / Select `Background v0.1.0 by Letsplaybar`
 
 To set how long an image should stay or remove / add images go to options / plugins / Background / settings. Here you have 3 forms to change the necessary settings.<br />Time in Seconds.
 
