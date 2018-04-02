@@ -14,3 +14,5 @@ Install:<br />
 Put the js and json file in the plugins folder of Betterdiscord
 
 To set how long an image should stay or remove / add images go to options / plugins / Background / settings. Here you have 3 forms to change the necessary settings.
+
+![alt text](http://prntscr.com/izyo47)
