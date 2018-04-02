@@ -8,4 +8,12 @@ You can remove the
     background-size: cover !important;
 }
 ```
-this part,then the plugin set this part.
+this part.
+
+
+Install:
+Put The js and json file in the plugins dir from BetterDiscord.
+
+Set The Change Time under options/plugins/Background/settings. Time in seconds.
+
+Add and Remove IMG under options/plugins/Background/settings.
