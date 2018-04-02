@@ -18,4 +18,4 @@ Go to User Settings in Discord / Plugins / Select `Background v0.1.0 by Letsplay
 
 To set how long an image should stay or remove / add images go to options / plugins / Background / settings. Here you have 3 forms to change the necessary settings.<br />Time in Seconds.
 
-![alt](https://i.imgur.com/mFYU2Az.png)
+![alt](https://i.imgur.com/5QxJa3U.png)
