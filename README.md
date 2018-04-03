@@ -13,6 +13,7 @@ You can remove this part as this sets the plugin:
 Install:<br />
 Ensure [BetterDiscord](https://github.com/rauenzi/BetterDiscordApp/releases/latest) is installed.<br />
 Put the js and json file in the plugins folder of Betterdiscord<br />
+Install the Theme [NotAnotherAnimeTheme](https://github.com/WhatDaPuck/NotAnotherAnimeTheme)<br />
 Restart the Discord client either by right clicking the tray icon and clicking "Quit Discord" or by pressing Ctrl+R inside the client.<br />
 Go to User Settings in Discord / Plugins / Select `Background v0.1.0 by Letsplaybar`
 
