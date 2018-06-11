@@ -40,7 +40,7 @@ var addPicture = function(name1, url1){
 	readTextFile("Background.config.json",function(text){
 		var json = JSON.parse(text);
 		json.img.push({name:name1,url:url1});
-		save(JSON.stringify(json),"Background.config.json");
+		save(JSON.stringify(json,null, "\t"),"Background.config.json");
 	});
 }
 ;
@@ -49,7 +49,7 @@ var setTime = function(time){
 	readTextFile("Background.config.json",function(text){
 		var json = JSON.parse(text);
 		json.time = time;
-		save(JSON.stringify(json),"Background.config.json");
+		save(JSON.stringify(json,null, "\t"),"Background.config.json");
 		clearInterval(timer);
 		timer = setInterval(setBackground,1000*timer);
 	});
@@ -66,7 +66,7 @@ var removePicture = function(name){
 				json.img.splice(i,1);
 			}
 		});
-		save(JSON.stringify(json),"Background.config.json");
+		save(JSON.stringify(json,null, "\t"),"Background.config.json");
 		clearInterval(timer);
 		timer = setInterval(setBackground,1000*timer);
 	});
