@@ -17,6 +17,7 @@ Install the Theme [NotAnotherAnimeTheme](https://github.com/WhatDaPuck/NotAnothe
 Restart the Discord client either by right clicking the tray icon and clicking "Quit Discord" or by pressing Ctrl+R inside the client.<br />
 Go to User Settings in Discord / Plugins / Select `Background v0.1.0 by Letsplaybar`
 
-To set how long an image should stay or remove / add images go to options / plugins / Background / settings. Here you have 3 forms to change the necessary settings.<br />Time in Seconds.
+To set how long an image should stay or remove / add images go to options / plugins / Background / settings. Here you have 4 forms to change the necessary settings.<br />Time in Seconds.
 
 ![alt](https://i.imgur.com/5QxJa3U.png)
+![alt](https://i.imgur.com/yEUT4td.png)
