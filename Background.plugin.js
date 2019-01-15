@@ -1,4 +1,4 @@
-//META{"name":"Background"}*//
+//META{"name":"Background","source":"https://raw.githubusercontent.com/Letsplaybar/Background/master/Background.plugin.js"}*//
 
 var Background = function(){};
 	
@@ -212,7 +212,7 @@ Background.prototype.getDescription = function () {
 };
 
 Background.prototype.getVersion = function () {
-    return "0.2.0";
+    return "0.2.1";
 };
 
 Background.prototype.getAuthor = function () {
