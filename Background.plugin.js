@@ -29,7 +29,7 @@ Background.prototype.setBackground = function(){
 		amount = -1;
 	}
 	});
-	PluginUtilities.checkForUpdate(this.getName(), this.getVersion(), "https://raw.githubusercontent.com/Letsplaybar/Background/master/Background.plugin.js");
+	PluginUtilities.checkForUpdate(BdApi.getPlugin('Background').getName(), BdApi.getPlugin('Background').getVersion(), "https://raw.githubusercontent.com/Letsplaybar/Background/master/Background.plugin.js");
 };
 
 Background.prototype.changeBackground = function(url){
