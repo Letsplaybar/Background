@@ -29,6 +29,7 @@ Background.prototype.setBackground = function(){
 		amount = -1;
 	}
 	});
+	PluginUtilities.checkForUpdate(this.getName(), this.getVersion(), "https://raw.githubusercontent.com/Letsplaybar/Background/master/Background.plugin.js");
 };
 
 Background.prototype.changeBackground = function(url){
@@ -212,7 +213,7 @@ Background.prototype.getDescription = function () {
 };
 
 Background.prototype.getVersion = function () {
-    return "0.2.1";
+    return "0.2.2";
 };
 
 Background.prototype.getAuthor = function () {
