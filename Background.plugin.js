@@ -4,8 +4,8 @@ var Background = function(){};
 	
 var timer;
 
-var testing = false;
-var testurl="";
+Background.prototype.testing = false;
+Background.prototype.testurl= "";
 
 var amount = -1;
 
@@ -121,30 +121,30 @@ Background.prototype.createContent = function(){
 }
 
 Background.prototype.changeTesting = function(){
-	if(testing){
+	if(BdApi.getPlugin('Background').testing){
 		console.log("Testing end")
-		testing = false;
+		BdApi.getPlugin('Background').testing = false;
 		readTextFile("Background.config.json",function(text){
 		var json = JSON.parse(text);
-		setBackground()
+		BdApi.getPlugin('Background').setBackground()
 		timer = setInterval(BdApi.getPlugin('Background').setBackground,1000*json.time);});
-		testurl = ""
-		document.getElementById("test").value = testurl;
+		BdApi.getPlugin('Background').testurl = ""
+		document.getElementById("test").value = BdApi.getPlugin('Background').testurl;
 		document.getElementById("testid").innerHTML = test();
 		return;
 	}
 	console.log("Testing begin")
-	testing = true;
+	BdApi.getPlugin('Background').testing = true;
 	clearInterval(timer);
-	testurl = document.getElementById("test").value;
-	BdApi.getPlugin('Background').changeBackground(testurl);
-	document.getElementById("testid").innerHTML = test();
+	BdApi.getPlugin('Background').testurl = document.getElementById("test").value;
+	BdApi.getPlugin('Background').changeBackground(BdApi.getPlugin('Background').testurl);
+	document.getElementById("testid").innerHTML = BdApi.getPlugin('Background').test();
 }
 ;
 
 
 Background.prototype.test = function(){
-	if(testing){
+	if(BdApi.getPlugin('Background').testing){
 		return "Testen beenden";
 	}
 	return "Testen starten";
@@ -193,7 +193,7 @@ Background.prototype.getSettingsPanel = function () {
 		var json = JSON.parse(text);
 		timer = json.time;
 	});
-    return "<h3>Settings Panel</h3><br> <div style=\"color: white;\">Name:<br><input type=\"text\" id=\"name\" style=\"width: 95%;\"> <br> <br> URL:<br><input type\"text\" id=\"url\" style=\"width: 95%;\"> <br> <br> <button onclick=\"BdApi.getPlugin('Background').addValue()\" style=\"width: 25%;\">Add</button></div><br><br><div style=\"color: white;\">Time:<br><input id=\"time\"style=\"width: 95%;\" value=\""+timer+"\"> <br> <br> <button onclick=\"BdApi.getPlugin('Background').changeTime()\" style=\"width: 25%;\">change Time</button></div><br><br><div style=\"color: white;\"> Picture:<br><div id=\"content\">"+html+"</div><br><br><button onclick=\"BdApi.getPlugin('Background').remove()\" style=\"width: 25%;\">Remove</button></div><br><br><div style=\"color: white;\">Testen:<br><input id=\"test\"style=\"width: 95%;\" value=\""+testurl+"\"> <br> <br> <button id=\"testid\" onclick=\"BdApi.getPlugin('Background').changeTesting()\" style=\"width: 25%;\">"+BdApi.getPlugin('Background').test()+"</button></div> <br> <br> <div><h3>Skip</h3><br> <br>  <button id=\"skip\" onclick=\"BdApi.getPlugin('Background').setBackground()\" style=\"width: 25%;\">Skip</button></div>";
+    return "<h3>Settings Panel</h3><br> <div style=\"color: white;\">Name:<br><input type=\"text\" id=\"name\" style=\"width: 95%;\"> <br> <br> URL:<br><input type\"text\" id=\"url\" style=\"width: 95%;\"> <br> <br> <button onclick=\"BdApi.getPlugin('Background').addValue()\" style=\"width: 25%;\">Add</button></div><br><br><div style=\"color: white;\">Time:<br><input id=\"time\"style=\"width: 95%;\" value=\""+timer+"\"> <br> <br> <button onclick=\"BdApi.getPlugin('Background').changeTime()\" style=\"width: 25%;\">change Time</button></div><br><br><div style=\"color: white;\"> Picture:<br><div id=\"content\">"+html+"</div><br><br><button onclick=\"BdApi.getPlugin('Background').remove()\" style=\"width: 25%;\">Remove</button></div><br><br><div style=\"color: white;\">Testen:<br><input id=\"test\"style=\"width: 95%;\" value=\""+BdApi.getPlugin('Background').testurl+"\"> <br> <br> <button id=\"testid\" onclick=\"BdApi.getPlugin('Background').changeTesting()\" style=\"width: 25%;\">"+BdApi.getPlugin('Background').test()+"</button></div> <br> <br> <div><h3>Skip</h3><br> <br>  <button id=\"skip\" onclick=\"BdApi.getPlugin('Background').setBackground()\" style=\"width: 25%;\">Skip</button></div>";
 };
 
 Background.prototype.getName = function () {
@@ -213,7 +213,7 @@ Background.prototype.getDescription = function () {
 };
 
 Background.prototype.getVersion = function () {
-    return "0.2.3";
+    return "0.2.4";
 };
 
 Background.prototype.getAuthor = function () {
