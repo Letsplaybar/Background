@@ -29,7 +29,6 @@ Background.prototype.setBackground = function(){
 		amount = -1;
 	}
 	});
-	PluginUtilities.checkForUpdate(BdApi.getPlugin('Background').getName(), BdApi.getPlugin('Background').getVersion(), "https://raw.githubusercontent.com/Letsplaybar/Background/master/Background.plugin.js");
 };
 
 Background.prototype.changeBackground = function(url){
@@ -179,6 +178,7 @@ Background.prototype.onMessage = function () {
 
 Background.prototype.onSwitch = function () {
     //called when a server or channel is switched
+	PluginUtilities.checkForUpdate("Background", BdApi.getPlugin('Background').getVersion(), "https://raw.githubusercontent.com/Letsplaybar/Background/master/Background.plugin.js");
 };
 
 Background.prototype.observer = function (e) {
@@ -213,7 +213,7 @@ Background.prototype.getDescription = function () {
 };
 
 Background.prototype.getVersion = function () {
-    return "0.2.2";
+    return "0.2.3";
 };
 
 Background.prototype.getAuthor = function () {
