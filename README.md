@@ -3,12 +3,9 @@ It is A BetterDiscord Plugin to change the Background with help from this Theme 
 
 You can remove this part as this sets the plugin:
 ```css
-[class~=app] {
-    background: url(https://raw.githubusercontent.com/WhatDaPuck/NotAnotherAnimeTheme/master/image/PTT4OKi.jpg) !important;
-    background-size: cover !important;
-}
+/* Edit this to change your background */
+    --background-image: url(https://i.imgur.com/j1Z6HVc.jpg); /* format is url(IMAGE URL HERE) */
 ```
-
 
 Install:<br />
 Ensure [BetterDiscord](https://github.com/rauenzi/BetterDiscordApp/releases/latest) is installed.<br />
