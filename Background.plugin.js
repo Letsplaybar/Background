@@ -9,6 +9,8 @@ Background.prototype.testurl= "";
 
 var amount = -1;
 
+var PluginUpdater, WebpackModules, Tooltip, Modals, ReactTools, ContextMenu, Patcher, Settings, PluginUtilities, DiscordAPI;
+
 function readTextFile(file, callback) {
 	var filepath = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'] + "\\AppData\\Roaming\\BetterDiscord\\plugins\\"+file;
 	var fs = require('fs');
@@ -159,12 +161,30 @@ Background.prototype.start = function () {
 	readTextFile("Background.config.json",function(text){
 		var json = JSON.parse(text);
 		timer = setInterval(BdApi.getPlugin('Background').setBackground,1000*json.time);})
+		
+		let libraryScript=document.getElementById('ZLibraryScript');
+    if(typeof window.ZLibrary!=="undefined")this.initialize();
+    else libraryScript.addEventListener("load",()=>this.initialize());
 	console.log("Background started");
 };
 
 
 Background.prototype.load = function () {
-	
+	let libraryScript=document.getElementById('ZLibraryScript');
+		if(!window.ZLibrary&&!libraryScript){
+			libraryScript=document.createElement('script');
+			libraryScript.setAttribute('type','text/javascript');
+			libraryScript.addEventListener("error",function(){if(typeof window.ZLibrary==="undefined"){window.BdApi.alert("Library Missing",`The library plugin needed for ${this.getName()} is missing and could not be loaded.<br /><br /><a href="https://betterdiscord.net/ghdl?url=https://raw.githubusercontent.com/rauenzi/BDPluginLibrary/master/release/0PluginLibrary.plugin.js" target="_blank">Click here to download the library!</a>`);}}.bind(this));
+			libraryScript.setAttribute('src','https://rauenzi.github.io/BDPluginLibrary/release/ZLibrary.js');
+			libraryScript.setAttribute('id','ZLibraryScript');
+			document.head.appendChild(libraryScript);
+		}
+};
+
+Background.prototype.initialize= function(){
+	({PluginUpdater, WebpackModules, Tooltip, Modals, ReactTools, ContextMenu, Patcher, Settings, PluginUtilities, DiscordAPI} = ZLibrary);
+    let self = this;
+	PluginUtilities.checkForUpdate("Background", BdApi.getPlugin('Background').getVersion(), "https://raw.githubusercontent.com/Letsplaybar/Background/master/Background.plugin.js");
 };
 
 Background.prototype.unload = function () {}
@@ -218,7 +238,7 @@ Background.prototype.getDescription = function () {
 };
 
 Background.prototype.getVersion = function () {
-    return "0.2.5";
+    return "0.2.6";
 };
 
 Background.prototype.getAuthor = function () {
