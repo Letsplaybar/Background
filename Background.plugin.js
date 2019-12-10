@@ -18,6 +18,14 @@ function readTextFile(file, callback) {
 
 Background.prototype.setBackground = function(){
 	amount++;
+	BdApi.getPlugin('Background').onSwitchBG();
+};
+
+Background.prototype.changeBackground = function(url){
+	document.documentElement.style.setProperty("--background-image","url("+url+")");
+};
+
+Background.prototype.onSwitchBG = function(){
 	readTextFile("Background.config.json",function(text){
 	var json = JSON.parse(text);
 	
@@ -29,11 +37,7 @@ Background.prototype.setBackground = function(){
 		amount = -1;
 	}
 	});
-};
-
-Background.prototype.changeBackground = function(url){
-	document.documentElement.style.setProperty("--background-image","url("+url+")");
-};
+}
 
 Background.prototype.addPicture = function(name1, url1){
 	readTextFile("Background.config.json",function(text){
@@ -178,6 +182,7 @@ Background.prototype.onMessage = function () {
 
 Background.prototype.onSwitch = function () {
     //called when a server or channel is switched
+	BdApi.getPlugin('Background').onSwitchBG();
 	PluginUtilities.checkForUpdate("Background", BdApi.getPlugin('Background').getVersion(), "https://raw.githubusercontent.com/Letsplaybar/Background/master/Background.plugin.js");
 };
 
@@ -213,7 +218,7 @@ Background.prototype.getDescription = function () {
 };
 
 Background.prototype.getVersion = function () {
-    return "0.2.4";
+    return "0.2.5";
 };
 
 Background.prototype.getAuthor = function () {
