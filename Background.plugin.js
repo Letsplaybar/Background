@@ -162,9 +162,6 @@ Background.prototype.start = function () {
 		var json = JSON.parse(text);
 		timer = setInterval(BdApi.getPlugin('Background').setBackground,1000*json.time);})
 		
-		let libraryScript=document.getElementById('ZLibraryScript');
-    if(typeof window.ZLibrary!=="undefined")this.initialize();
-    else libraryScript.addEventListener("load",()=>this.initialize());
 	console.log("Background started");
 };
 
