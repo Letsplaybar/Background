@@ -45,7 +45,7 @@ Background.prototype.addPicture = function(name1, url1){
 	readTextFile("Background.config.json",function(text){
 		var json = JSON.parse(text);
 		json.img.push({name:name1,url:url1});
-		save(JSON.stringify(json,null, "\t"),"Background.config.json");
+		BdApi.getPlugin('Background').save(JSON.stringify(json,null, "\t"),"Background.config.json");
 	});
 }
 ;
@@ -54,7 +54,7 @@ Background.prototype.setTime = function(time){
 	readTextFile("Background.config.json",function(text){
 		var json = JSON.parse(text);
 		json.time = time;
-		save(JSON.stringify(json,null, "\t"),"Background.config.json");
+		BdApi.getPlugin('Background').save(JSON.stringify(json,null, "\t"),"Background.config.json");
 		clearInterval(timer);
 		timer = setInterval(BdApi.getPlugin('Background').setBackground,1000*timer);
 	});
