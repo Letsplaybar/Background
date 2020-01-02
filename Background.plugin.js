@@ -235,7 +235,7 @@ Background.prototype.getDescription = function () {
 };
 
 Background.prototype.getVersion = function () {
-    return "0.2.6";
+    return "0.2.7";
 };
 
 Background.prototype.getAuthor = function () {
