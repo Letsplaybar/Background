@@ -6,6 +6,7 @@ var timer;
 
 Background.prototype.testing = false;
 Background.prototype.testurl= "";
+Background.prototype.url= "";
 
 var amount = -1;
 
@@ -24,7 +25,7 @@ Background.prototype.setBackground = function(){
 };
 
 Background.prototype.changeBackground = function(url){
-	document.documentElement.style.setProperty("--background-image","url("+url+")");
+	document.getRootNode().body.style.setProperty("--background-image","url("+url+")");
 };
 
 Background.prototype.onSwitchBG = function(){
@@ -34,6 +35,7 @@ Background.prototype.onSwitchBG = function(){
 	// Array enthält alle Elemente des Dokuments
 	
 	var url = json.img[amount].url;
+	Background.prototype.url = url;
 	BdApi.getPlugin('Background').changeBackground(url);
 	if(amount == json.img.length-1){
 		amount = -1;
@@ -199,8 +201,10 @@ Background.prototype.onMessage = function () {
 
 Background.prototype.onSwitch = function () {
     //called when a server or channel is switched
-	BdApi.getPlugin('Background').onSwitchBG();
-	PluginUtilities.checkForUpdate("Background", BdApi.getPlugin('Background').getVersion(), "https://raw.githubusercontent.com/Letsplaybar/Background/master/Background.plugin.js");
+	var url = Background.prototype.url;
+	document.getRootNode().body.style.setProperty("--background-image","url("+url+")");
+	console.log("Update");
+	//PluginUtilities.checkForUpdate("Background", BdApi.getPlugin('Background').getVersion(), "https://raw.githubusercontent.com/Letsplaybar/Background/master/Background.plugin.js");
 };
 
 Background.prototype.observer = function (e) {
