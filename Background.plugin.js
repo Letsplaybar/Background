@@ -10,8 +10,6 @@ Background.prototype.url= "";
 
 var amount = -1;
 
-var PluginUpdater, WebpackModules, Tooltip, Modals, ReactTools, ContextMenu, Patcher, Settings, PluginUtilities, DiscordAPI;
-
 function readTextFile(file, callback) {
 	var filepath = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'] + "\\AppData\\Roaming\\BetterDiscord\\plugins\\"+file;
 	var fs = require('fs');
@@ -159,6 +157,8 @@ Background.prototype.test = function(){
 }
 ;
 Background.prototype.start = function () {
+	if (!global.ZeresPluginLibrary) return window.BdApi.alert("Library Missing",`The library plugin needed for ${this.getName()} is missing.<br /><br /> <a href="" target="_blank">Click here to download the library!</a>`);
+        ZLibrary.PluginUpdater.checkForUpdate(this.getName(), this.getVersion(), "https://raw.githubusercontent.com/Letsplaybar/Background/master/Background.plugin.js");
 	BdApi.getPlugin('Background').setBackground();
 	readTextFile("Background.config.json",function(text){
 		var json = JSON.parse(text);
@@ -168,23 +168,9 @@ Background.prototype.start = function () {
 };
 
 
-Background.prototype.load = function () {
-	let libraryScript=document.getElementById('ZLibraryScript');
-		if(!window.ZLibrary&&!libraryScript){
-			libraryScript=document.createElement('script');
-			libraryScript.setAttribute('type','text/javascript');
-			libraryScript.addEventListener("error",function(){if(typeof window.ZLibrary==="undefined"){window.BdApi.alert("Library Missing",`The library plugin needed for ${this.getName()} is missing and could not be loaded.<br /><br /><a href="https://betterdiscord.net/ghdl?url=https://raw.githubusercontent.com/rauenzi/BDPluginLibrary/master/release/0PluginLibrary.plugin.js" target="_blank">Click here to download the library!</a>`);}}.bind(this));
-			libraryScript.setAttribute('src','https://rauenzi.github.io/BDPluginLibrary/release/ZLibrary.js');
-			libraryScript.setAttribute('id','ZLibraryScript');
-			document.head.appendChild(libraryScript);
-		}
-};
+Background.prototype.load = function () {};
 
-Background.prototype.initialize= function(){
-	({PluginUpdater, WebpackModules, Tooltip, Modals, ReactTools, ContextMenu, Patcher, Settings, PluginUtilities, DiscordAPI} = ZLibrary);
-    let self = this;
-	PluginUtilities.checkForUpdate("Background", BdApi.getPlugin('Background').getVersion(), "https://raw.githubusercontent.com/Letsplaybar/Background/master/Background.plugin.js");
-};
+Background.prototype.initialize= function(){};
 
 Background.prototype.unload = function () {}
 ;
@@ -239,7 +225,7 @@ Background.prototype.getDescription = function () {
 };
 
 Background.prototype.getVersion = function () {
-    return "0.2.8";
+    return "0.2.9";
 };
 
 Background.prototype.getAuthor = function () {
