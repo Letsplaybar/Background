@@ -158,7 +158,7 @@ Background.prototype.test = function(){
 ;
 Background.prototype.start = function () {
 	if (!global.ZeresPluginLibrary) return window.BdApi.alert("Library Missing",`The library plugin needed for ${this.getName()} is missing.<br /><br /> <a href="" target="_blank">Click here to download the library!</a>`);
-        ZLibrary.PluginUpdater.checkForUpdate(this.getName(), this.getVersion(), "https://raw.githubusercontent.com/Letsplaybar/Background/master/Background.plugin.js");
+        ZLibrary.PluginUpdater.checkForUpdate(BdApi.getPlugin('Background').getName(), BdApi.getPlugin('Background').getVersion(), "https://raw.githubusercontent.com/Letsplaybar/Background/master/Background.plugin.js");
 	BdApi.getPlugin('Background').setBackground();
 	readTextFile("Background.config.json",function(text){
 		var json = JSON.parse(text);
