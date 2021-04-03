@@ -19,7 +19,7 @@ function readTextFile(file, callback) {
 
 Background.prototype.setBackground = function(){
 	amount++;
-	BdApi.getPlugin('Background').onSwitchBG();
+	BdApi.Plugins.get('Background').instance.onSwitchBG();
 };
 
 Background.prototype.changeBackground = function(url){
@@ -27,6 +27,7 @@ Background.prototype.changeBackground = function(url){
 };
 
 Background.prototype.onSwitchBG = function(){
+	var obj = BdApi.Plugins.get('Background').instance;
 	readTextFile("Background.config.json",function(text){
 	var json = JSON.parse(text);
 	
@@ -34,7 +35,7 @@ Background.prototype.onSwitchBG = function(){
 	
 	var url = json.img[amount].url;
 	Background.prototype.url = url;
-	BdApi.getPlugin('Background').changeBackground(url);
+	obj.changeBackground(url);
 	if(amount == json.img.length-1){
 		amount = -1;
 	}
@@ -42,26 +43,29 @@ Background.prototype.onSwitchBG = function(){
 }
 
 Background.prototype.addPicture = function(name1, url1){
+	var obj = BdApi.Plugins.get('Background').instance;
 	readTextFile("Background.config.json",function(text){
 		var json = JSON.parse(text);
 		json.img.push({name:name1,url:url1});
-		BdApi.getPlugin('Background').save(JSON.stringify(json,null, "\t"),"Background.config.json");
+		obj.save(JSON.stringify(json,null, "\t"),"Background.config.json");
 	});
 }
 ;
 
 Background.prototype.setTime = function(time){
+	var obj = BdApi.Plugins.get('Background').instance;
 	readTextFile("Background.config.json",function(text){
 		var json = JSON.parse(text);
 		json.time = time;
-		BdApi.getPlugin('Background').save(JSON.stringify(json,null, "\t"),"Background.config.json");
+		obj.save(JSON.stringify(json,null, "\t"),"Background.config.json");
 		clearInterval(timer);
-		timer = setInterval(BdApi.getPlugin('Background').setBackground,1000*timer);
+		timer = setInterval(obj.setBackground,1000*timer);
 	});
 }
 ;
 
 Background.prototype.removePicture = function(name){
+	var obj = BdApi.Plugins.get('Background').instance;
 	readTextFile("Background.config.json",function(text){
 		var json = JSON.parse(text);
 		var i = -1;
@@ -71,9 +75,9 @@ Background.prototype.removePicture = function(name){
 				json.img.splice(i,1);
 			}
 		});
-		BdApi.getPlugin('Background').save(JSON.stringify(json,null, "\t"),"Background.config.json");
+		obj.save(JSON.stringify(json,null, "\t"),"Background.config.json");
 		clearInterval(timer);
-		timer = setInterval(BdApi.getPlugin('Background').setBackground,1000*timer);
+		timer = setInterval(obj.setBackground,1000*timer);
 	});
 };
 
@@ -94,24 +98,24 @@ Background.prototype.addValue = function(){
 	var url = document.getElementById("url").value;
 	if(url == "undefined")
 		return;
-	BdApi.getPlugin('Background').addPicture(name, url);
+	BdApi.Plugins.get('Background').instance.addPicture(name, url);
 	document.getElementById("name").value = "";
 	document.getElementById("url").value = "";
-	var html = BdApi.getPlugin('Background').createContent();
+	var html = BdApi.Plugins.get('Background').instance.createContent();
 	document.getElementById("content").innerHTML = html;
 	console.log("Picture added");
 };
 
 Background.prototype.changeTime = function(){
 	var time =document.getElementById("time").value;
-	BdApi.getPlugin('Background').setTime(time);
+	BdApi.Plugins.get('Background').instance.setTime(time);
 	console.log("Time changed");
 };
 
 Background.prototype.remove = function(){
 	var img = document.querySelector('input[name="picture"]:checked').value;
-	BdApi.getPlugin('Background').removePicture(img);
-	document.getElementById("content").innerHTML = BdApi.getPlugin('Background').createContent();
+	BdApi.Plugins.get('Background').instance.removePicture(img);
+	document.getElementById("content").innerHTML = BdApi.Plugins.get('Background').instance.createContent();
 	console.log("Picture removed");
 };
 
@@ -127,30 +131,31 @@ Background.prototype.createContent = function(){
 }
 
 Background.prototype.changeTesting = function(){
-	if(BdApi.getPlugin('Background').testing){
+	if(BdApi.Plugins.get('Background').instance.testing){
 		console.log("Testing end")
-		BdApi.getPlugin('Background').testing = false;
+		BdApi.Plugins.get('Background').instance.testing = false;
+		var obj = BdApi.Plugins.get('Background').instance;
 		readTextFile("Background.config.json",function(text){
 		var json = JSON.parse(text);
-		BdApi.getPlugin('Background').setBackground()
-		timer = setInterval(BdApi.getPlugin('Background').setBackground,1000*json.time);});
-		BdApi.getPlugin('Background').testurl = ""
-		document.getElementById("test").value = BdApi.getPlugin('Background').testurl;
+		obj.setBackground()
+		timer = setInterval(obj.setBackground,1000*json.time);});
+		obj.testurl = ""
+		document.getElementById("test").value = obj.testurl;
 		document.getElementById("testid").innerHTML = test();
 		return;
 	}
 	console.log("Testing begin")
-	BdApi.getPlugin('Background').testing = true;
+	BdApi.Plugins.get('Background').instance.testing = true;
 	clearInterval(timer);
-	BdApi.getPlugin('Background').testurl = document.getElementById("test").value;
-	BdApi.getPlugin('Background').changeBackground(BdApi.getPlugin('Background').testurl);
-	document.getElementById("testid").innerHTML = BdApi.getPlugin('Background').test();
+	BdApi.Plugins.get('Background').instance.testurl = document.getElementById("test").value;
+	BdApi.Plugins.get('Background').instance.changeBackground(BdApi.Plugins.get('Background').instance.testurl);
+	document.getElementById("testid").innerHTML = BdApi.Plugins.get('Background').instance.test();
 }
 ;
 
 
 Background.prototype.test = function(){
-	if(BdApi.getPlugin('Background').testing){
+	if(BdApi.Plugins.get('Background').instance.testing){
 		return "Testen beenden";
 	}
 	return "Testen starten";
@@ -158,11 +163,11 @@ Background.prototype.test = function(){
 ;
 Background.prototype.start = function () {
 	if (!global.ZeresPluginLibrary) return window.BdApi.alert("Library Missing",`The library plugin needed for ${this.getName()} is missing.<br /><br /> <a href="" target="_blank">Click here to download the library!</a>`);
-        ZLibrary.PluginUpdater.checkForUpdate(BdApi.getPlugin('Background').getName(), BdApi.getPlugin('Background').getVersion(), "https://raw.githubusercontent.com/Letsplaybar/Background/master/Background.plugin.js");
-	BdApi.getPlugin('Background').setBackground();
+        ZLibrary.PluginUpdater.checkForUpdate(this.getName(), this.getVersion(), "https://raw.githubusercontent.com/Letsplaybar/Background/master/Background.plugin.js");
+	BdApi.Plugins.get('Background').instance.setBackground();
 	readTextFile("Background.config.json",function(text){
 		var json = JSON.parse(text);
-		timer = setInterval(BdApi.getPlugin('Background').setBackground,1000*json.time);})
+		timer = setInterval(BdApi.Plugins.get('Background').instance.setBackground,1000*json.time);})
 		
 	console.log("Background started");
 };
@@ -190,7 +195,7 @@ Background.prototype.onSwitch = function () {
 	var url = Background.prototype.url;
 	document.getRootNode().body.style.setProperty("--background-image","url("+url+")");
 	console.log("Update");
-	//PluginUtilities.checkForUpdate("Background", BdApi.getPlugin('Background').getVersion(), "https://raw.githubusercontent.com/Letsplaybar/Background/master/Background.plugin.js");
+	//PluginUtilities.checkForUpdate("Background", this.getVersion(), "https://raw.githubusercontent.com/Letsplaybar/Background/master/Background.plugin.js");
 };
 
 Background.prototype.observer = function (e) {
@@ -200,12 +205,12 @@ Background.prototype.observer = function (e) {
 
 Background.prototype.getSettingsPanel = function () {
 	var timer = "";
-	var html = BdApi.getPlugin('Background').createContent();
+	var html = BdApi.Plugins.get('Background').instance.createContent();
 	readTextFile("Background.config.json",function(text){
 		var json = JSON.parse(text);
 		timer = json.time;
 	});
-    return "<h3>Settings Panel</h3><br> <div style=\"color: white;\">Name:<br><input type=\"text\" id=\"name\" style=\"width: 95%;\"> <br> <br> URL:<br><input type\"text\" id=\"url\" style=\"width: 95%;\"> <br> <br> <button onclick=\"BdApi.getPlugin('Background').addValue()\" style=\"width: 25%;\">Add</button></div><br><br><div style=\"color: white;\">Time:<br><input id=\"time\"style=\"width: 95%;\" value=\""+timer+"\"> <br> <br> <button onclick=\"BdApi.getPlugin('Background').changeTime()\" style=\"width: 25%;\">change Time</button></div><br><br><div style=\"color: white;\"> Picture:<br><div id=\"content\">"+html+"</div><br><br><button onclick=\"BdApi.getPlugin('Background').remove()\" style=\"width: 25%;\">Remove</button></div><br><br><div style=\"color: white;\">Testen:<br><input id=\"test\"style=\"width: 95%;\" value=\""+BdApi.getPlugin('Background').testurl+"\"> <br> <br> <button id=\"testid\" onclick=\"BdApi.getPlugin('Background').changeTesting()\" style=\"width: 25%;\">"+BdApi.getPlugin('Background').test()+"</button></div> <br> <br> <div><h3>Skip</h3><br> <br>  <button id=\"skip\" onclick=\"BdApi.getPlugin('Background').setBackground()\" style=\"width: 25%;\">Skip</button></div>";
+    return "<h3>Settings Panel</h3><br> <div style=\"color: white;\">Name:<br><input type=\"text\" id=\"name\" style=\"width: 95%;\"> <br> <br> URL:<br><input type\"text\" id=\"url\" style=\"width: 95%;\"> <br> <br> <button onclick=\"BdApi.Plugins.get('Background').instance.addValue()\" style=\"width: 25%;\">Add</button></div><br><br><div style=\"color: white;\">Time:<br><input id=\"time\"style=\"width: 95%;\" value=\""+timer+"\"> <br> <br> <button onclick=\"BdApi.Plugins.get('Background').instance.changeTime()\" style=\"width: 25%;\">change Time</button></div><br><br><div style=\"color: white;\"> Picture:<br><div id=\"content\">"+html+"</div><br><br><button onclick=\"BdApi.Plugins.get('Background').instance.remove()\" style=\"width: 25%;\">Remove</button></div><br><br><div style=\"color: white;\">Testen:<br><input id=\"test\"style=\"width: 95%;\" value=\""+BdApi.Plugins.get('Background').instance.testurl+"\"> <br> <br> <button id=\"testid\" onclick=\"BdApi.Plugins.get('Background').instance.changeTesting()\" style=\"width: 25%;\">"+BdApi.Plugins.get('Background').instance.test()+"</button></div> <br> <br> <div><h3>Skip</h3><br> <br>  <button id=\"skip\" onclick=\"BdApi.Plugins.get('Background').instance.setBackground()\" style=\"width: 25%;\">Skip</button></div>";
 };
 
 Background.prototype.getName = function () {
