@@ -23,7 +23,7 @@ Background.prototype.setBackground = function(){
 };
 
 Background.prototype.changeBackground = function(url){
-	document.getRootNode().body.style.setProperty("--background-image","url("+url+")");
+	document.getRootNode().body.style.setProperty("--theme-background-image","url("+url+")");
 };
 
 Background.prototype.onSwitchBG = function(){
