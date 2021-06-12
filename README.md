@@ -3,8 +3,10 @@ It is A BetterDiscord Plugin to change the Background with help from this Theme 
 
 You can remove this part as this sets the plugin:
 ```css
-/* Edit this to change your background */
-    --background-image: url(https://i.imgur.com/j1Z6HVc.jpg); /* format is url(IMAGE URL HERE) */
+ /*
+    Theme Background
+  */
+  --theme-background-image: url(https://i.imgur.com/j1Z6HVc.jpg);
 ```
 
 Install:<br />
